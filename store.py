@@ -1,6 +1,8 @@
 import os
 import base64
 import shelve
+import asyncio
+from aiofile import async_open
 
 BASE_DIR = 'documents'
 
@@ -26,14 +28,13 @@ def getPath (url, firstDir):
     path = firstDir + '/' + fileName
     return path
 
-def writeToDoc (path, content):
-    file = open(path, 'w')
-    file.write(content)
-    file.close()
+async def writeToDoc (path, content):
+    async with async_open(path, 'w') as file:
+        await file.write(content)
 
-def save(url, content):
+async def save(url, content):
     addToForwardIndex(url)
     firstDir = getDir(url)
     path = getPath(url, firstDir)
-    writeToDoc(path, content)
+    await writeToDoc(path, content)
 
