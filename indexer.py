@@ -14,8 +14,6 @@ for url in forwardIndex:
             inverseIndex[token] = {}
         inverseIndex[token][url] = forwardIndex[url][token]
 
-print(inverseIndex['space'])
-
 forwardIndex.close()
 inverseIndex.close()
 
